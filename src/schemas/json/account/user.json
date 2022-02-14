@@ -1,0 +1,17 @@
+{
+  "$id": "user.json",
+  "$schema": "http://json-schema.org/schema",
+  "type": "object",
+  "required": [
+    "id",
+    "name"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    }
+  }
+}
