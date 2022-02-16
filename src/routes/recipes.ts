@@ -4,6 +4,8 @@ import * as responseSchema from '../schemas/json/response.json'
 import {Recipe} from "../schemas/types/recipes/recipe";
 import * as recipeShowParamsSchema from '../schemas/json/recipes/recipe.show.params.json'
 import {RecipesShowParams} from "../schemas/types/recipes/recipes.show.params";
+import {isAuthorized} from "../security/secure";
+import {canListRecipes} from "../security/secure-recipes";
 
 export async function recipesRoutes(fastify: FastifyInstance) {
     /**
@@ -17,7 +19,9 @@ export async function recipesRoutes(fastify: FastifyInstance) {
             response: {200: recipeSchema}
         },
         handler: async function (request, reply): Promise<Recipe> {
-            return reply.send("Get all recipes");
+            console.log(request.session)
+            await isAuthorized(canListRecipes, request.session, null)
+            return reply.send("This is the recipes list");
         }
     });
 

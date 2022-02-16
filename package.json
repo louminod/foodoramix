@@ -18,7 +18,14 @@
     "typescript": "^4.3.2"
   },
   "dependencies": {
+    "@types/cookie-signature": "^1.0.4",
+    "@types/jsonwebtoken": "^8.5.8",
+    "dotenv": "^16.0.0",
     "fastify": "^3.25.3",
-    "mysql": "^2.18.1"
+    "fastify-cookie": "^5.5.0",
+    "fastify-multipart": "^5.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.18.1",
+    "typeorm": "^0.2.41"
   }
 }

@@ -1,3 +1,4 @@
-import { fastify } from './lib/fastify'
+import {fastify} from './lib/fastify'
+import {FASTIFY_PORT} from "./env/dotenv";
 
-fastify.listen(process.env.PORT ?? 3000).catch(console.error)
+fastify.listen(FASTIFY_PORT).catch(console.error)
