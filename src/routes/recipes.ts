@@ -1,8 +1,8 @@
 import {FastifyInstance, FastifyRequest} from "fastify";
-import * as recipeSchema from '../schemas/json/recipes/recipe.json'
+import * as recipeSchema from '../schemas/json/recipe.json'
 import * as responseSchema from '../schemas/json/response.json'
 import {Recipe} from "../schemas/types/recipes/recipe";
-import * as recipeShowParamsSchema from '../schemas/json/recipes/recipe.show.params.json'
+import * as recipeShowParamsSchema from '../schemas/json/recipe.show.params.json'
 import {RecipesShowParams} from "../schemas/types/recipes/recipes.show.params";
 import { initConnection } from '../lib/typeorm'
 import { getConnection } from 'typeorm'

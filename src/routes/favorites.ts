@@ -1,8 +1,8 @@
 import {FastifyInstance, FastifyRequest} from "fastify";
 import * as responseSchema from '../schemas/json/response.json'
-import * as favoriteSchema from '../schemas/json/favorites/favorite.json'
-import * as favoriteShowParamSchema from '../schemas/json/favorites/favorite.show.params.json'
-import * as favoriteDeleteParamSchema from '../schemas/json/favorites/favorite.delete.params.json'
+import * as favoriteSchema from '../schemas/json/favorite.json'
+import * as favoriteShowParamSchema from '../schemas/json/favorite.show.params.json'
+import * as favoriteDeleteParamSchema from '../schemas/json/favorite.delete.params.json'
 import {Favorite} from "../schemas/types/favorites/favorite";
 import {FavoritesShowParams} from "../schemas/types/favorites/favorite.show.params";
 import {FavoritesDeleteParams} from "../schemas/types/favorites/favorite.delete.params";
