@@ -5,5 +5,4 @@ tmp/
 temp/
 dist/
 .env
-ormconfig.json
 package-lock.json
