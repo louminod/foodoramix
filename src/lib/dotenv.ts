@@ -26,6 +26,6 @@ export const COOKIE_MAX_AGE = parseInt(getOrThrow('COOKIE_MAX_AGE'), 10)
 
 function getOrThrow(name: string) {
     const val = process.env[name]
-    if (typeof val === 'undefined') throw new Error("Missing mandatory environment variable ${name}")
+    if (typeof val === 'undefined') throw new Error("Missing mandatory environment variable " + name)
     return val
 }

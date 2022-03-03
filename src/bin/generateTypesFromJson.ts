@@ -17,6 +17,7 @@ async function run() {
                 .then(ts => fs.writeFileSync("./src/schemas/types/" + fileName + '.d.ts', ts))
         });
     });
+    console.log("generation done");
 }
 
 run().catch(console.error)
