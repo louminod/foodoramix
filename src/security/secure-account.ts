@@ -1,6 +1,5 @@
 import {SecureAction} from "./secure";
 import {createQueryBuilder} from 'typeorm'
-import {Recipe} from "../entity/recipe";
 import {UnLoggedError} from "./errors/secureError";
 import {User} from "../entity/user";
 import {Session} from "../entity/session";

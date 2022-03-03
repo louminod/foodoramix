@@ -8,7 +8,7 @@ export interface SecureAction<Model> {
 export async function isAuthorized<Model>(
     secureAction: SecureAction<Model>,
     currentSession: Session | null | undefined,
-    record: Model
+    record: Model | null
 ) {
     const result = await secureAction(currentSession, record)
 

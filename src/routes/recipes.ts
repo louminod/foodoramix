@@ -7,7 +7,6 @@ import {RecipeShow} from "../schemas/types/recipe.show.params";
 import { initConnection } from '../lib/typeorm'
 import { getConnection } from 'typeorm'
 import {isAuthorized} from "../security/secure";
-import {canListRecipes} from "../security/secure-recipes";
 
 export async function recipesRoutes(fastify: FastifyInstance) {
     /**
@@ -21,12 +20,6 @@ export async function recipesRoutes(fastify: FastifyInstance) {
             response: {200: recipeSchema}
         },
         handler: async function (request, reply): Promise<Recipe> {
-            await isAuthorized(canListRecipes, request.session, null)
-            await initConnection();
-            const conn = getConnection();
-            let results = await conn.query('SELECT * FROM recipes LIMIT 20;');
-            console.log(results);
-            await conn.close();
             return reply.send("Get all recipes");
         }
     });

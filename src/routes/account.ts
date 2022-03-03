@@ -5,26 +5,30 @@ import {saveSession} from "../lib/session";
 import {promisify} from "util";
 import {randomBytes} from "crypto";
 import {isAuthorized} from "../security/secure";
-import {canListRecipes} from "../security/secure-recipes";
 import {SessionCreate} from "../schemas/types/session.create.body";
 import * as sessionCreateBody from "../schemas/json/session.create.body.json"
 import {getConnection} from "typeorm";
-import {userPolicyScope} from "../security/secure-account";
+import {canLoadAccount, userPolicyScope} from "../security/secure-account";
 
 export async function accountRoutes(fastify: FastifyInstance) {
     /**
-     * Function to get the list of recipes.
-     * @return {json} Return the list of recipes as a json.
+     * Function to get the data of the connected user.
+     * @return {json} Return the data of the current user.
      */
     fastify.get('/', {
         handler: async function (request: FastifyRequest): Promise<any> {
-            await isAuthorized(canListRecipes, request.session, null)
+            await isAuthorized(canLoadAccount, request.session, null)
             const user = await userPolicyScope(request.session!).getOne();
             return {user: user}
         }
     });
 
-
+    /**
+     * Function to connect a user.
+     * @param email
+     * @param password
+     * @return {json} Return success or not.
+     */
     fastify.post<{ Body: SessionCreate }>('/login', {
         schema: {
             body: sessionCreateBody
@@ -43,6 +47,12 @@ export async function accountRoutes(fastify: FastifyInstance) {
         }
     });
 
+    /**
+     * Function to create a new user.
+     * @param email
+     * @param password
+     * @return {json} Return success or not.
+     */
     fastify.post<{ Body: SessionCreate }>('/signin', {
         schema: {
             body: sessionCreateBody
