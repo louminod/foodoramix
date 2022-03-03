@@ -1,3 +1,10 @@
-import { fastify } from './lib/fastify'
+import {fastify} from './lib/fastify';
+import {FASTIFY_PORT} from "./lib/dotenv";
+import {initConnection} from './lib/typeorm';
 
-fastify.listen(process.env.PORT ?? 3000).catch(console.error)
+async function run() {
+    await initConnection();
+    await fastify.listen(FASTIFY_PORT);
+}
+
+run().catch(console.error);

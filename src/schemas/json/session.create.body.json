@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "type": "object",
+  "properties": {
+    "email": { "type": "string" },
+    "password": { "type": "string" }
+  },
+  "additionalProperties": false,
+  "required": ["email", "password"]
+}
