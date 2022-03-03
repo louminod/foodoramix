@@ -3,7 +3,7 @@ import cookie, {FastifyCookieOptions} from 'fastify-cookie'
 import {recipesRoutes} from '../routes/recipes'
 import {favoritesRoutes} from '../routes/favorites'
 import {accountRoutes} from '../routes/account'
-import {COOKIE_SECRET} from "../env/dotenv";
+import {COOKIE_SECRET} from "../lib/dotenv";
 import {loadSession} from "./session";
 import {UnauthorizedError} from "../security/errors/secureError";
 import {EntityNotFoundError} from "typeorm";
