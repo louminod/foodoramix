@@ -1,17 +1,14 @@
 {
    "compilerOptions": {
-      "lib": [
-         "es5",
-         "es6"
-      ],
-      "target": "es5",
-      "module": "commonjs",
+      "outDir": "./dist",
+      "target": "es2018",
       "moduleResolution": "node",
-      "outDir": "./build",
+      "module": "commonjs",
+      "strict": true,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
-      "sourceMap": true,
       "resolveJsonModule": true,
       "skipLibCheck": true
-   }
+   },
+   "include": ["./**/*"]
 }

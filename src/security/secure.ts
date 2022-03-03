@@ -1,5 +1,5 @@
 import {UnauthorizedError} from "./errors/secureError";
-import {Session} from "../entities/session";
+import {Session} from "../entity/session";
 
 export interface SecureAction<Model> {
     (currentSession: Session | null | undefined, record: Model | null): Promise<boolean | UnauthorizedError>
