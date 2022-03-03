@@ -5,7 +5,7 @@ import {promisify} from "util";
 import {randomBytes} from "crypto";
 import {isAuthorized} from "../security/secure";
 import {canListRecipes} from "../security/secure-recipes";
-import {SessionsCreateBody} from "../schemas/types/account/sessions.create.body";
+import {SessionsCreate} from "../schemas/types/sessions.create.body";
 
 export async function accountRoutes(fastify: FastifyInstance) {
     /**
@@ -22,7 +22,7 @@ export async function accountRoutes(fastify: FastifyInstance) {
     });
 
 
-    fastify.post<{ Body: SessionsCreateBody }>('/token', {
+    fastify.post<{ Body: SessionsCreate }>('/login', {
         handler: async function invite(request, reply) {
             const user = new User();
 

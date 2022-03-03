@@ -7,4 +7,5 @@
 
 export interface SessionsCreate {
   email: string;
+  password: string;
 }

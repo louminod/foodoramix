@@ -1,9 +1,9 @@
 import {FastifyInstance, FastifyRequest} from "fastify";
 import * as recipeSchema from '../schemas/json/recipe.json'
 import * as responseSchema from '../schemas/json/response.json'
-import {Recipe} from "../schemas/types/recipes/recipe";
+import {Recipe} from "../schemas/types/recipe";
 import * as recipeShowParamsSchema from '../schemas/json/recipe.show.params.json'
-import {RecipesShowParams} from "../schemas/types/recipes/recipes.show.params";
+import {RecipeShow} from "../schemas/types/recipe.show.params";
 import { initConnection } from '../lib/typeorm'
 import { getConnection } from 'typeorm'
 import {isAuthorized} from "../security/secure";
@@ -53,7 +53,7 @@ export async function recipesRoutes(fastify: FastifyInstance) {
      * @param {number} id - The id of the recipe.
      * @return {json} Return the recipe as a json.
      */
-    fastify.route<{ Params: RecipesShowParams }>({
+    fastify.route<{ Params: RecipeShow }>({
         method: 'GET',
         url: '/:id',
         schema: {
