@@ -9,6 +9,7 @@ import {canListRecipes} from "../security/secure-recipes";
 import {SessionCreate} from "../schemas/types/session.create.body";
 import * as sessionCreateBody from "../schemas/json/session.create.body.json"
 import {getConnection} from "typeorm";
+import {userPolicyScope} from "../security/secure-account";
 
 export async function accountRoutes(fastify: FastifyInstance) {
     /**
@@ -18,7 +19,8 @@ export async function accountRoutes(fastify: FastifyInstance) {
     fastify.get('/', {
         handler: async function (request: FastifyRequest): Promise<any> {
             await isAuthorized(canListRecipes, request.session, null)
-            return {success: true}
+            const user = await userPolicyScope(request.session!).getOne();
+            return {user: user}
         }
     });
 
@@ -29,14 +31,15 @@ export async function accountRoutes(fastify: FastifyInstance) {
         },
         handler: async function invite(request, reply) {
             const user = await getConnection().getRepository(User).findOneOrFail({where: {email: request.body.email}})
+            const success = await bcrypt.compare(request.body.password, user.password);
 
-            const succes = await bcrypt.compare(request.body.password, user.password);
-
-            if (succes) {
+            if (success) {
+                user.loginToken = null
+                await getConnection().getRepository(User).save(user)
                 await saveSession(reply, user);
             }
 
-            return {success: succes};
+            return {success: success};
         }
     });
 

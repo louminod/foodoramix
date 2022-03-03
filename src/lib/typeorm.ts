@@ -10,6 +10,7 @@ import {
     DATABASE_USER
 } from './dotenv'
 import {User} from "../entity/user";
+import {Session} from "../entity/session";
 
 export function initConnection() {
     return createConnection({
@@ -19,7 +20,7 @@ export function initConnection() {
         username: DATABASE_USER,
         password: DATABASE_PASS,
         database: DATABASE_NAME,
-        entities: [User],
+        entities: [User, Session],
         synchronize: DATABASE_SYNC,
         logging: DATABASE_LOGGING,
         multipleStatements: true
