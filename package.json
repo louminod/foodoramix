@@ -27,6 +27,7 @@
       "dotenv": "^16.0.0",
       "fastify": "^3.25.3",
       "fastify-cookie": "^5.5.0",
+      "fastify-swagger": "^4.17.0",
       "json-schema-to-typescript": "^10.1.5",
       "mysql2": "^2.3.3",
       "reflect-metadata": "^0.1.13",

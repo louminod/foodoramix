@@ -7,13 +7,14 @@ import {COOKIE_SECRET} from "../lib/dotenv";
 import {loadSession} from "./session";
 import {UnauthorizedError} from "../security/errors/secureError";
 import {EntityNotFoundError} from "typeorm";
-import fastifyMultipart from 'fastify-multipart';
+import fastifySwagger from 'fastify-swagger'
+import {swaggerConfig} from './swagger'
 
 export const fastify = fastifyFactory({logger: process.env.NODE_ENV !== 'test'})
-    .register(fastifyMultipart)
     .register(cookie, {secret: COOKIE_SECRET} as FastifyCookieOptions)
     .decorateRequest('session', null)
     .addHook('preHandler', loadSession)
+    .register(fastifySwagger, swaggerConfig)
     .register(recipesRoutes, {prefix: '/recipes'})
     .register(favoritesRoutes, {prefix: '/favorites'})
     .register(accountRoutes, {prefix: '/account'})
