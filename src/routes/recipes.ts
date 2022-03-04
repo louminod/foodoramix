@@ -1,10 +1,11 @@
 import {FastifyInstance, FastifyRequest} from "fastify";
 import * as recipeSchema from '../schemas/json/recipeSchema.json'
 import * as responseSchema from '../schemas/json/response.json'
-import {Recipe} from "../schemas/types/recipe";
+import {RecipeSchema} from "../schemas/types/recipeSchema";
 import * as recipeShowParamsSchema from '../schemas/json/recipe.show.params.json'
 import {RecipeShow} from "../schemas/types/recipe.show.params";
 import { getConnection } from 'typeorm'
+import { Recipe } from "../entity/Recipe";
 
 export async function recipesRoutes(fastify: FastifyInstance) {
     /**
@@ -14,14 +15,9 @@ export async function recipesRoutes(fastify: FastifyInstance) {
     fastify.route({
         method: 'GET',
         url: '/',
-        schema: {
-            response: {200: recipeSchema}
-        },
-        handler: async function (request, reply): Promise<Recipe> {
-            //const recipes = await getConnection().getRepository(Recipe).find();
-            //console.log("Loaded recipes: ", recipes);
-
-            return reply.send("Get all recipes");
+        handler: async function (request, reply): Promise<RecipeSchema> {
+            const recipes = await getConnection().getRepository(Recipe).find();
+            return reply.send(JSON.stringify(recipes, null, '\t'));
         }
     });
 
@@ -30,14 +26,21 @@ export async function recipesRoutes(fastify: FastifyInstance) {
      * @param {json} recipe - The recipe to post.
      * @return {json} Return a response corresponding to success or not.
      */
-    fastify.route<{ Params: Recipe }>({
+    fastify.route<{ Params: RecipeSchema }>({
         method: 'POST',
         url: '/',
         schema: {
             params: recipeSchema,
             response: {200: responseSchema}
         },
-        handler: async function (request, reply): Promise<Recipe> {
+        handler: async function (request, reply): Promise<RecipeSchema> {
+            /*
+            const recipe = new Recipe();
+            recipe.id_recipe = request.params.id;
+            recipe.title = request.params.title;
+            recipe.url = request.params.url;
+            await getConnection().getRepository(Recipe).save(recipe);
+            */
             return reply.send("Post a recipe");
         }
     });
@@ -54,7 +57,10 @@ export async function recipesRoutes(fastify: FastifyInstance) {
             params: recipeShowParamsSchema,
             response: {200: recipeSchema}
         },
-        handler: async function (request, reply): Promise<Recipe> {
+        handler: async function (request, reply): Promise<RecipeSchema> {
+            /*
+            const recipes = await getConnection().getRepository(Recipe).find({ id_recipe: request.params.id});
+            */
             return reply.send("Get recipe with id n°".concat(request.params.id.toString()))
         }
     })
