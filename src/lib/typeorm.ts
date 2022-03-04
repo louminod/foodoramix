@@ -14,8 +14,8 @@ import {Ingredient} from "../entity/Ingredient";
 import {Instruction} from "../entity/Instruction";
 import {RecipeIngredient} from "../entity/RecipeIngredient";
 import {RecipeInstruction} from "../entity/RecipeInstruction";
-import {User} from "../entity/user";
-import {Session} from "../entity/session";
+import {User} from "../entity/User";
+import {Session} from "../entity/Session";
 
 export function initConnection() {
     return createConnection({
