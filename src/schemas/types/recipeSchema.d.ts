@@ -5,7 +5,15 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface AccountLogin {
-  email: string;
-  password: string;
+export interface RecipeSchema {
+  id: string;
+  title: string;
+  url: string;
+  ingredients: {
+    [k: string]: unknown;
+  }[];
+  instructions: {
+    [k: string]: unknown;
+  }[];
+  [k: string]: unknown;
 }

@@ -1,6 +1,6 @@
 import {FastifyInstance, FastifyRequest} from "fastify";
 import * as responseSchema from '../schemas/json/response.json'
-import * as favoriteSchema from '../schemas/json/favorite.json'
+import * as favoriteSchema from '../schemas/json/favoriteSchema.json'
 import * as favoriteShowParamSchema from '../schemas/json/favorite.show.params.json'
 import * as favoriteDeleteParamSchema from '../schemas/json/favorite.delete.params.json'
 import {Favorite} from "../schemas/types/favorite";

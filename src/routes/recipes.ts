@@ -1,5 +1,5 @@
 import {FastifyInstance, FastifyRequest} from "fastify";
-import * as recipeSchema from '../schemas/json/recipe.json'
+import * as recipeSchema from '../schemas/json/recipeSchema.json'
 import * as responseSchema from '../schemas/json/response.json'
 import {Recipe} from "../schemas/types/recipe";
 import * as recipeShowParamsSchema from '../schemas/json/recipe.show.params.json'
