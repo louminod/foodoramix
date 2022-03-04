@@ -11,6 +11,6 @@ export class User {
     @Column()
     password!: string;
 
-    @Column({type: 'varchar', unique: true})
-    loginToken!: string
+    @Column({type: 'varchar', unique: true, nullable: true})
+    loginToken!: string | null
 }
