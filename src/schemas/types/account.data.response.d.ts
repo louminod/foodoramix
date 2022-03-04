@@ -6,10 +6,8 @@
  */
 
 /**
- * Default response
+ * Successful response with the user data
  */
-export interface Response {
-  status: string;
-  message?: string;
-  [k: string]: unknown;
+export interface AccountData {
+  email: string;
 }

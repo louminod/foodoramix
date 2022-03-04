@@ -1,17 +1,17 @@
 {
-  "$id": "response.json",
   "$schema": "http://json-schema.org/schema",
   "type": "object",
-  "description": "Default response",
-  "required": [
-    "status"
-  ],
   "properties": {
-    "status": {
+    "email": {
       "type": "string"
     },
-    "message": {
+    "password": {
       "type": "string"
     }
-  }
+  },
+  "additionalProperties": false,
+  "required": [
+    "email",
+    "password"
+  ]
 }

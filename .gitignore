@@ -1,8 +1,8 @@
 .idea/
 .vscode/
 node_modules/
-dist/
 tmp/
 temp/
+dist/
 .env
 package-lock.json

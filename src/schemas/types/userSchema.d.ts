@@ -5,11 +5,8 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-/**
- * Default response
- */
-export interface Response {
-  status: string;
-  message?: string;
+export interface UserSchema {
+  id: string;
+  name: string;
   [k: string]: unknown;
 }

@@ -10,19 +10,25 @@
       "start": "ts-node src/index.ts",
       "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
    },
-   "author": "Thomas VEILLARD",
+   "author": "Louis-Marie MERMINOD & Sébastien LEVASSEUR",
    "license": "ISC",
    "devDependencies": {
       "@types/node": "^16.11.10",
       "@typescript-eslint/eslint-plugin": "^5.3.0",
       "@typescript-eslint/parser": "^5.3.0",
       "eslint": "^8.2.0",
-      "typescript": "4.5.2",
-      "ts-node": "10.4.0"
+      "ts-node": "10.4.0",
+      "typescript": "4.5.2"
    },
    "dependencies": {
+      "@types/bcrypt": "^5.0.0",
+      "@types/cookie-signature": "^1.0.4",
+      "bcrypt": "^5.0.1",
       "dotenv": "^16.0.0",
       "fastify": "^3.25.3",
+      "fastify-cookie": "^5.5.0",
+      "fastify-swagger": "^4.17.0",
+      "json-schema-to-typescript": "^10.1.5",
       "mysql2": "^2.3.3",
       "reflect-metadata": "^0.1.13",
       "typeorm": "0.2.44"

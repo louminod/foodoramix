@@ -1,11 +1,10 @@
 import {FastifyInstance, FastifyRequest} from "fastify";
 import * as responseSchema from '../schemas/json/response.json'
-import * as favoriteSchema from '../schemas/json/favorites/favorite.json'
-import * as favoriteShowParamSchema from '../schemas/json/favorites/favorite.show.params.json'
-import * as favoriteDeleteParamSchema from '../schemas/json/favorites/favorite.delete.params.json'
-import {Favorite} from "../schemas/types/favorites/favorite";
-import {FavoritesShowParams} from "../schemas/types/favorites/favorite.show.params";
-import {FavoritesDeleteParams} from "../schemas/types/favorites/favorite.delete.params";
+import * as favoriteSchema from '../schemas/json/favoriteSchema.json'
+import * as favoriteShowParamSchema from '../schemas/json/favorite.show.params.json'
+import * as favoriteDeleteParamSchema from '../schemas/json/favorite.delete.params.json'
+import {Favorite} from "../schemas/types/favorite";
+import {FavoriteShow} from "../schemas/types/favorite.show.params";
 
 export async function favoritesRoutes(fastify: FastifyInstance) {
     /**
@@ -45,7 +44,7 @@ export async function favoritesRoutes(fastify: FastifyInstance) {
      * @param {number} id - The id of the recipe.
      * @return {json} Return the recipe as a json.
      */
-    fastify.route<{ Params: FavoritesShowParams }>({
+    fastify.route<{ Params: FavoriteShow }>({
         method: 'GET',
         url: '/:id',
         schema: {
