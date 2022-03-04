@@ -13,6 +13,20 @@ export const swaggerConfig: SwaggerOptions = {
         schemes: ['http'],
         consumes: ['application/json'],
         produces: ['application/json'],
+        tags: [
+            {name: 'account', description: 'User account related end-points'}
+        ],
+        definitions: {
+            User: {
+                type: 'object',
+                required: ['id', 'email', 'password'],
+                properties: {
+                    id: {type: 'int'},
+                    email: {type: 'string', format: 'email'},
+                    password: {type: 'string'},
+                }
+            }
+        },
         securityDefinitions: {
             apiKey: {
                 type: 'apiKey',
