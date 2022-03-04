@@ -1,5 +1,5 @@
 import {FastifyInstance, FastifyRequest} from "fastify";
-import {User} from "../entity/user";
+import {User} from "../entity/User";
 import * as bcrypt from "bcrypt";
 import {saveSession} from "../lib/session";
 import {promisify} from "util";

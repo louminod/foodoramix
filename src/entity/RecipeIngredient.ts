@@ -4,12 +4,12 @@ import {Entity, Column, PrimaryGeneratedColumn} from "typeorm";
 export class RecipeIngredient {
 
     @PrimaryGeneratedColumn()
-    id: number
+    id!: number
 
     @Column()
-    id_recipe: string;
+    id_recipe!: string;
 
     @Column()
-    id_ingredient: number;
+    id_ingredient!: number;
 
 }

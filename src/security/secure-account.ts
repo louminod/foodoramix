@@ -1,8 +1,8 @@
 import {SecureAction} from "./secure";
 import {createQueryBuilder} from 'typeorm'
 import {UnLoggedError} from "./errors/secureError";
-import {User} from "../entity/user";
-import {Session} from "../entity/session";
+import {User} from "../entity/User";
+import {Session} from "../entity/Session";
 
 export const canLoadAccount: SecureAction<User> = async function canLoadAccount(session) {
     if (!session) throw new UnLoggedError()

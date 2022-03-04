@@ -39,7 +39,7 @@ async function run() {
                 });  
             }
             else {
-                recipeIngredient.id_ingredient = mapIngredients.get(ingredientToAdd);
+                recipeIngredient.id_ingredient = mapIngredients.get(ingredientToAdd) ?? 0;
             }
             await recipeIngredientRepository.save(recipeIngredient);
         }
@@ -57,7 +57,7 @@ async function run() {
                 });  
             }
             else {
-                recipeInstruction.id_instruction = mapInstructions.get(instructionToAdd);
+                recipeInstruction.id_instruction = mapInstructions.get(instructionToAdd) ?? 0;
             }
             await recipeInstructionRepository.save(recipeInstruction);
         }

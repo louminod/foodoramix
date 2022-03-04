@@ -5,7 +5,6 @@ import {Recipe} from "../schemas/types/recipe";
 import * as recipeShowParamsSchema from '../schemas/json/recipe.show.params.json'
 import {RecipeShow} from "../schemas/types/recipe.show.params";
 import { getConnection } from 'typeorm'
-import {isAuthorized} from "../security/secure";
 
 export async function recipesRoutes(fastify: FastifyInstance) {
     /**

@@ -4,9 +4,9 @@ import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 export class Ingredient {
 
     @PrimaryGeneratedColumn()
-    id_ingredient: number;
+    id_ingredient!: number;
 
     @Column("text")
-    text: string;
+    text!: string;
 
 }

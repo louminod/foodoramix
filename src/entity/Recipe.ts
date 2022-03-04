@@ -4,12 +4,12 @@ import {Entity, PrimaryColumn, Column} from "typeorm";
 export class Recipe {
 
     @PrimaryColumn()
-    id_recipe: string;
+    id_recipe!: string;
 
     @Column("text")
-    title: string;
+    title!: string;
 
     @Column("text")
-    url: string;
+    url!: string;
 
 }

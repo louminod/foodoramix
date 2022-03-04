@@ -4,9 +4,9 @@ import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 export class Instruction {
 
     @PrimaryGeneratedColumn()
-    id_instruction: number;
+    id_instruction!: number;
 
     @Column("text")
-    text: string;
+    text!: string;
 
 }
