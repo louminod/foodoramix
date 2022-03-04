@@ -1,11 +1,10 @@
 import {FastifyInstance, FastifyRequest} from "fastify";
 import * as recipeSchema from '../schemas/json/recipes/recipe.json'
 import * as responseSchema from '../schemas/json/response.json'
-import {Recipe} from "../schemas/types/recipes/recipe";
 import * as recipeShowParamsSchema from '../schemas/json/recipes/recipe.show.params.json'
 import {RecipesShowParams} from "../schemas/types/recipes/recipes.show.params";
-import { initConnection } from '../lib/typeorm'
-import { getConnection } from 'typeorm'
+import { Recipe } from "../schemas/types/recipes/recipe";
+import { getConnection } from "typeorm";
 
 export async function recipesRoutes(fastify: FastifyInstance) {
     /**
@@ -19,11 +18,9 @@ export async function recipesRoutes(fastify: FastifyInstance) {
             response: {200: recipeSchema}
         },
         handler: async function (request, reply): Promise<Recipe> {
-            await initConnection();
-            const conn = getConnection();
-            let results = await conn.query('SELECT * FROM recipes LIMIT 20;');
-            console.log(results);
-            await conn.close();
+            //const recipes = await getConnection().getRepository(Recipe).find();
+            //console.log("Loaded recipes: ", recipes);
+
             return reply.send("Get all recipes");
         }
     });
@@ -58,11 +55,6 @@ export async function recipesRoutes(fastify: FastifyInstance) {
             response: {200: recipeSchema}
         },
         handler: async function (request, reply): Promise<Recipe> {
-            await initConnection();
-            const conn = getConnection();
-            let results = await conn.query('SELECT * FROM recipes WHERE recipes.id_recipe = ?;', [request.params.id.toString()]);
-            //console.log(results);
-            await conn.close();
             return reply.send("Get recipe with id n°".concat(request.params.id.toString()))
         }
     })
