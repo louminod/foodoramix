@@ -70,14 +70,14 @@ export async function recipesRoutes(fastify: FastifyInstance) {
      * @param {number} id - The id of the recipe.
      * @return {json} Return a response corresponding to success or not.
      */
-    fastify.route<{ Params: Recipe }>({
+    fastify.route<{ Params: RecipeSchema }>({
         method: 'PATCH',
         url: '/:id',
         schema: {
             params: recipeSchema,
             response: {200: recipeSchema}
         },
-        handler: async function (request, reply): Promise<Recipe> {
+        handler: async function (request, reply): Promise<RecipeSchema> {
             return reply.send("Patch a recipe with id n°".concat(request.params.id.toString()))
         }
     })
