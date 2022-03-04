@@ -3,7 +3,6 @@
   "type": "object",
   "properties": {
     "email": {
-      "description": "email of the user",
       "type": "string"
     },
     "password": {
