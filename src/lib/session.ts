@@ -1,7 +1,7 @@
-import {Session} from "../entity/session";
+import {Session} from "../entity/Session";
 import {FastifyReply, FastifyRequest} from "fastify";
 import {COOKIE_HTTP_ONLY, COOKIE_MAX_AGE, COOKIE_NAME, COOKIE_SECURE, COOKIE_SIGNED} from "../lib/dotenv";
-import {User} from "../entity/user";
+import {User} from "../entity/User";
 import {randomBytes} from 'crypto'
 import {promisify} from 'util'
 import {getConnection} from "typeorm";

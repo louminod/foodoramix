@@ -4,9 +4,7 @@ import * as responseSchema from '../schemas/json/response.json'
 import {Recipe} from "../schemas/types/recipe";
 import * as recipeShowParamsSchema from '../schemas/json/recipe.show.params.json'
 import {RecipeShow} from "../schemas/types/recipe.show.params";
-import { initConnection } from '../lib/typeorm'
 import { getConnection } from 'typeorm'
-import {isAuthorized} from "../security/secure";
 
 export async function recipesRoutes(fastify: FastifyInstance) {
     /**
@@ -20,6 +18,9 @@ export async function recipesRoutes(fastify: FastifyInstance) {
             response: {200: recipeSchema}
         },
         handler: async function (request, reply): Promise<Recipe> {
+            //const recipes = await getConnection().getRepository(Recipe).find();
+            //console.log("Loaded recipes: ", recipes);
+
             return reply.send("Get all recipes");
         }
     });
@@ -54,11 +55,6 @@ export async function recipesRoutes(fastify: FastifyInstance) {
             response: {200: recipeSchema}
         },
         handler: async function (request, reply): Promise<Recipe> {
-            await initConnection();
-            const conn = getConnection();
-            let results = await conn.query('SELECT * FROM recipes WHERE recipes.id_recipe = ?;', [request.params.id.toString()]);
-            //console.log(results);
-            await conn.close();
             return reply.send("Get recipe with id n°".concat(request.params.id.toString()))
         }
     })
