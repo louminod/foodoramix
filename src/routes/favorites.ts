@@ -1,92 +1,72 @@
 import {FastifyInstance, FastifyRequest} from "fastify";
 import * as responseSchema from '../schemas/json/response.json'
-import * as favoriteSchema from '../schemas/json/favoriteSchema.json'
-import * as favoriteShowParamSchema from '../schemas/json/favorite.show.params.json'
+import * as recipeSchema from '../schemas/json/recipeSchema.json'
 import * as favoriteDeleteParamSchema from '../schemas/json/favorite.delete.params.json'
-import {FavoriteSchema} from "../schemas/types/favoriteSchema";
-import {FavoriteShow} from "../schemas/types/favorite.show.params";
+import * as favoriteCreateBodySchema from '../schemas/json/favorite.create.body.json'
+import {isAuthorized} from "../security/secure";
+import {canDeleteFavorite, canGetFavorites, canGetSingleFavorite, canPostFavorites} from "../security/secure-favorite";
+import {getRepository} from "typeorm";
+import {Favorite} from "../entity/Favorite";
+import {Recipe} from "../entity/Recipe";
+import {FavoriteDelete} from "../schemas/types/favorite.delete.params";
+import {FavoriteCreate} from "../schemas/types/favorite.create.body";
+import {FavoriteGet} from "../schemas/types/favorite.get.params";
 
 export async function favoritesRoutes(fastify: FastifyInstance) {
-    /**
-     * Function to get the list of recipes.
-     * @return {json} Return the list of recipes as a json.
-     */
+
     fastify.route({
         method: 'GET',
         url: '/',
         schema: {
-            response: {200: favoriteSchema}
+            description: 'get user favorites',
+            tags: ['favorite'],
+            response: {200: recipeSchema}
         },
-        handler: async function (request, reply): Promise<FavoriteSchema> {
-            return reply.send("Get all user favorites");
+        handler: async function (request, reply): Promise<Favorite> {
+            await isAuthorized(canGetFavorites, request.session, null);
+            const favorites = await getRepository(Favorite).find({user: request.session!.user});
+            const favoriteRecipes: Recipe[] = [];
+            favorites.forEach(favorite => favoriteRecipes.push(favorite.recipe));
+            return reply.code(200).send(JSON.stringify(favoriteRecipes));
         }
     });
 
-    /**
-     * Function to post a recipe.
-     * @param {json} recipe - The recipe to post.
-     * @return {json} Return a response corresponding to success or not.
-     */
-    fastify.route<{ Params: FavoriteSchema }>({
+    fastify.route<{ Body: FavoriteCreate }>({
         method: 'POST',
         url: '/',
         schema: {
-            params: favoriteSchema,
+            description: 'add recipe to favorites',
+            tags: ['favorite'],
+            body: favoriteCreateBodySchema,
             response: {200: responseSchema}
         },
-        handler: async function (request, reply): Promise<FavoriteSchema> {
-            return reply.send("Post a favorite");
+        handler: async function (request, reply): Promise<Favorite> {
+            await isAuthorized(canPostFavorites, request.session, null);
+            let favorite = new Favorite();
+            favorite.user = request.session!.user;
+            favorite.recipe = await getRepository(Recipe).findOneOrFail({id_recipe: request.body.recipe_id});
+            favorite = await getRepository(Favorite).save(favorite);
+            return reply.code(200).send(JSON.stringify(favorite));
         }
     });
 
-    /**
-     * Function to get a recipe by is id.
-     * @param {number} id - The id of the recipe.
-     * @return {json} Return the recipe as a json.
-     */
-    fastify.route<{ Params: FavoriteShow }>({
-        method: 'GET',
-        url: '/:id',
-        schema: {
-            params: favoriteShowParamSchema,
-            response: {200: favoriteSchema}
-        },
-        handler: async function (request, reply): Promise<FavoriteSchema> {
-            return reply.send("Get favorite with id n°".concat(request.params.id.toString()))
-        }
-    })
-
-    /**
-     * Function to patch a recipe.
-     * @param {number} id - The id of the recipe.
-     * @return {json} Return a response corresponding to success or not.
-     */
-    fastify.route<{ Params: FavoriteSchema }>({
-        method: 'PATCH',
-        url: '/:id',
-        schema: {
-            params: favoriteSchema,
-            response: {200: favoriteSchema}
-        },
-        handler: async function (request, reply): Promise<FavoriteSchema> {
-            return reply.send("Patch a favorite with id n°".concat(request.params.id.toString()))
-        }
-    })
-
-    /**
-     * Function to patch a recipe.
-     * @param {number} id - The id of the recipe.
-     * @return {json} Return a response corresponding to success or not.
-     */
-    fastify.route<{ Params: FavoriteSchema }>({
+    fastify.route<{ Params: FavoriteDelete }>({
         method: 'DELETE',
-        url: '/:id',
+        url: '/:recipe_id',
         schema: {
+            description: 'remove recipe from favorites',
+            tags: ['favorite'],
             params: favoriteDeleteParamSchema,
             response: {200: responseSchema}
         },
-        handler: async function (request, reply): Promise<FavoriteSchema> {
-            return reply.send("Delete a recipe with id n°".concat(request.params.id.toString()))
+        handler: async function (request, reply): Promise<any> {
+            const recipe = await getRepository(Recipe).findOneOrFail(request.params.recipe_id);
+            const favorite = await getRepository(Favorite).findOneOrFail({user: request.session!.user, recipe: recipe});
+            await isAuthorized(canDeleteFavorite, request.session, favorite);
+            await getRepository(Favorite).delete(favorite);
+            return reply.code(200).send(JSON.stringify({
+                status: "favorite deleted"
+            }));
         }
     })
 }

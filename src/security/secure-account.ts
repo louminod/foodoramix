@@ -9,7 +9,7 @@ export const canLoadAccount: SecureAction<User> = async function canLoadAccount(
     return true
 }
 
-export function userPolicyScope(session: Session) {
+export function userSecureScope(session: Session) {
     return createQueryBuilder(User)
         .where('loginToken = :loginToken AND id = :id', {loginToken: session.id, id: session.user.id});
 }
