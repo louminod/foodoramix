@@ -3,7 +3,16 @@ import * as fs from "fs";
 import {compileFromFile} from 'json-schema-to-typescript'
 
 async function run() {
-    const srcPath = path.join("../src");
+
+    fs.readdir("./src/schemas/types/", (err, files) => {
+        if (err) throw err;
+
+        for (const file of files) {
+            fs.unlink(path.join("./src/schemas/types/", file), err => {
+                if (err) throw err;
+            });
+        }
+    });
 
     fs.readdir("./src/schemas/json", function (err, files) {
         if (err) {

@@ -12,7 +12,7 @@ import * as accountSigninBody from "../schemas/json/account.signin.body.json";
 import * as accountDataResponse from "../schemas/json/account.data.response.json";
 import * as response from "../schemas/json/response.json";
 import {getConnection} from "typeorm";
-import {canLoadAccount, userPolicyScope} from "../security/secure-account";
+import {canLoadAccount, userSecureScope} from "../security/secure-account";
 
 export async function accountRoutes(fastify: FastifyInstance) {
 
@@ -26,7 +26,7 @@ export async function accountRoutes(fastify: FastifyInstance) {
         },
         handler: async function (request: FastifyRequest): Promise<any> {
             await isAuthorized(canLoadAccount, request.session, null);
-            const user = await userPolicyScope(request.session!).getOne();
+            const user = await userSecureScope(request.session!).getOne();
             return {user: user};
         }
     });
