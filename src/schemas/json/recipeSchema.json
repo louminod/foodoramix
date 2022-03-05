@@ -9,7 +9,7 @@
     "instructions"
   ],
   "properties": {
-    "id": {
+    "id_recipe": {
       "type": "string",
       "description": "id of a recipe"
     },

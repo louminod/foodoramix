@@ -68,7 +68,7 @@ export async function recipesRoutes(fastify: FastifyInstance) {
 
     /**
      * Function to get a recipe by is id.
-     * @param {number} id - The id of the recipe.
+     * @param {string} id - The id of the recipe.
      * @return {json} Return the recipe as a json.
      */
     fastify.route<{ Params: RecipeShow }>({
@@ -81,14 +81,14 @@ export async function recipesRoutes(fastify: FastifyInstance) {
             tags: ['recipe'],
         },
         handler: async function (request, reply): Promise<RecipeSchema> {
-            const recipe = await getConnection().getRepository(Recipe).find({id_recipe: request.params.id});
+            const recipe = await getConnection().getRepository(Recipe).find({id_recipe: request.params.id_recipe});
             return reply.send(JSON.stringify(recipe, null, '\t'));
         }
     })
 
     /**
      * Function to patch a recipe.
-     * @param {number} id - The id of the recipe.
+     * @param {string} id - The id of the recipe.
      * @return {json} Return a response corresponding to success or not.
      */
     fastify.route<{ Params: RecipeShow, Body: RecipeSchema }>({
@@ -103,8 +103,8 @@ export async function recipesRoutes(fastify: FastifyInstance) {
         },
         handler: async function (request, reply): Promise<RecipeSchema> {
             const recipe = new Recipe();
-            recipe.id_recipe = request.params.id;
-            const exist = await getConnection().getRepository(Recipe).find({id_recipe: request.params.id});
+            recipe.id_recipe = request.params.id_recipe;
+            const exist = await getConnection().getRepository(Recipe).find({id_recipe: request.params.id_recipe});
             if (exist.length == 1) {
                 recipe.title = request.body.title;
                 recipe.url = request.body.url;

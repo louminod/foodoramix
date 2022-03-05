@@ -9,7 +9,7 @@ export interface RecipeSchema {
   /**
    * id of a recipe
    */
-  id?: string;
+  id_recipe?: string;
   /**
    * title of a recipe
    */

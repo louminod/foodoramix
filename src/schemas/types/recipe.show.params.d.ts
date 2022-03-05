@@ -6,5 +6,5 @@
  */
 
 export interface RecipeShow {
-  id: string;
+  id_recipe: string;
 }
