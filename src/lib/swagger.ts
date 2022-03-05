@@ -14,7 +14,8 @@ export const swaggerConfig: SwaggerOptions = {
         consumes: ['application/json'],
         produces: ['application/json'],
         tags: [
-            {name: 'account', description: 'User account related end-points'}
+            {name: 'account', description: 'User account related end-points'},
+            {name: 'recipe', description: 'Recipe related end-points'}
         ],
     },
     uiConfig: {

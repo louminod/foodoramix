@@ -3,7 +3,6 @@
   "$schema": "http://json-schema.org/schema",
   "type": "object",
   "required": [
-    "id",
     "title",
     "url",
     "ingredients",
@@ -11,24 +10,43 @@
   ],
   "properties": {
     "id": {
-      "type": "string"
+      "type": "string",
+      "description": "id of a recipe"
     },
     "title": {
-      "type": "string"
+      "type": "string",
+      "description": "title of a recipe"
     },
     "url": {
-      "type": "string"
+      "type": "string",
+      "description": "url of an image of a recipe"
     },
     "ingredients": {
       "type": "array",
+      "description": "all ingredients of a recipe",
       "items": {
-        "text": "string"
+        "id": {
+          "type": "number",
+          "description": "id of an ingredient"
+        },
+        "text": {
+            "type": "string",
+            "description": "description of an ingredient"
+        }
       }
     },
     "instructions": {
       "type": "array",
+      "description": "all instructions of a recipe",
       "items": {
-        "text": "string"
+        "id": {
+          "type": "number",
+          "description": "id of an instruction"
+        },
+        "text": {
+            "type": "string",
+            "description": "description of an instruction"
+        }
       }
     }
   }
