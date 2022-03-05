@@ -3,7 +3,7 @@ import * as responseSchema from '../schemas/json/response.json'
 import * as favoriteSchema from '../schemas/json/favoriteSchema.json'
 import * as favoriteShowParamSchema from '../schemas/json/favorite.show.params.json'
 import * as favoriteDeleteParamSchema from '../schemas/json/favorite.delete.params.json'
-import {Favorite} from "../schemas/types/favorite";
+import {FavoriteSchema} from "../schemas/types/favoriteSchema";
 import {FavoriteShow} from "../schemas/types/favorite.show.params";
 
 export async function favoritesRoutes(fastify: FastifyInstance) {
@@ -17,7 +17,7 @@ export async function favoritesRoutes(fastify: FastifyInstance) {
         schema: {
             response: {200: favoriteSchema}
         },
-        handler: async function (request, reply): Promise<Favorite> {
+        handler: async function (request, reply): Promise<FavoriteSchema> {
             return reply.send("Get all user favorites");
         }
     });
@@ -27,14 +27,14 @@ export async function favoritesRoutes(fastify: FastifyInstance) {
      * @param {json} recipe - The recipe to post.
      * @return {json} Return a response corresponding to success or not.
      */
-    fastify.route<{ Params: Favorite }>({
+    fastify.route<{ Params: FavoriteSchema }>({
         method: 'POST',
         url: '/',
         schema: {
             params: favoriteSchema,
             response: {200: responseSchema}
         },
-        handler: async function (request, reply): Promise<Favorite> {
+        handler: async function (request, reply): Promise<FavoriteSchema> {
             return reply.send("Post a favorite");
         }
     });
@@ -51,7 +51,7 @@ export async function favoritesRoutes(fastify: FastifyInstance) {
             params: favoriteShowParamSchema,
             response: {200: favoriteSchema}
         },
-        handler: async function (request, reply): Promise<Favorite> {
+        handler: async function (request, reply): Promise<FavoriteSchema> {
             return reply.send("Get favorite with id n°".concat(request.params.id.toString()))
         }
     })
@@ -61,14 +61,14 @@ export async function favoritesRoutes(fastify: FastifyInstance) {
      * @param {number} id - The id of the recipe.
      * @return {json} Return a response corresponding to success or not.
      */
-    fastify.route<{ Params: Favorite }>({
+    fastify.route<{ Params: FavoriteSchema }>({
         method: 'PATCH',
         url: '/:id',
         schema: {
             params: favoriteSchema,
             response: {200: favoriteSchema}
         },
-        handler: async function (request, reply): Promise<Favorite> {
+        handler: async function (request, reply): Promise<FavoriteSchema> {
             return reply.send("Patch a favorite with id n°".concat(request.params.id.toString()))
         }
     })
@@ -78,14 +78,14 @@ export async function favoritesRoutes(fastify: FastifyInstance) {
      * @param {number} id - The id of the recipe.
      * @return {json} Return a response corresponding to success or not.
      */
-    fastify.route<{ Params: Favorite }>({
+    fastify.route<{ Params: FavoriteSchema }>({
         method: 'DELETE',
         url: '/:id',
         schema: {
             params: favoriteDeleteParamSchema,
             response: {200: responseSchema}
         },
-        handler: async function (request, reply): Promise<Favorite> {
+        handler: async function (request, reply): Promise<FavoriteSchema> {
             return reply.send("Delete a recipe with id n°".concat(request.params.id.toString()))
         }
     })

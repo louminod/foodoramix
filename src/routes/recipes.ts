@@ -81,7 +81,7 @@ export async function recipesRoutes(fastify: FastifyInstance) {
             tags: ['recipe'],
         },
         handler: async function (request, reply): Promise<RecipeSchema> {
-            const recipe = await getConnection().getRepository(Recipe).find({id_recipe: request.params.id.toString()});
+            const recipe = await getConnection().getRepository(Recipe).find({id_recipe: request.params.id});
             return reply.send(JSON.stringify(recipe, null, '\t'));
         }
     })
@@ -91,17 +91,43 @@ export async function recipesRoutes(fastify: FastifyInstance) {
      * @param {number} id - The id of the recipe.
      * @return {json} Return a response corresponding to success or not.
      */
-    fastify.route<{ Params: RecipeSchema }>({
+    fastify.route<{ Params: RecipeShow, Body: RecipeSchema }>({
         method: 'PATCH',
         url: '/:id',
         schema: {
-            params: recipeSchema,
+            params: recipeShowParamsSchema,
+            body: recipeSchema,
             response: {200: recipeSchema},
             description: 'patch a recipe',
             tags: ['recipe'],
         },
         handler: async function (request, reply): Promise<RecipeSchema> {
-            return reply.send("Patch a recipe with id n°".concat(request.params.id.toString()))
+            const recipe = new Recipe();
+            recipe.id_recipe = request.params.id;
+            const exist = await getConnection().getRepository(Recipe).find({id_recipe: request.params.id});
+            if (exist.length == 1) {
+                recipe.title = request.body.title;
+                recipe.url = request.body.url;
+                recipe.ingredients = [];
+                recipe.instructions = [];
+                for (let i = 0; i < request.body.ingredients.length; i++) {
+                    const ingredient = new Ingredient();
+                    ingredient.text = request.body.ingredients[i].text as string;
+                    await getConnection().getRepository(Ingredient).save(ingredient);
+                    recipe.ingredients.push(ingredient);
+                }
+                for (let i = 0; i < request.body.instructions.length; i++) {
+                    const instruction = new Instruction();
+                    instruction.text = request.body.instructions[i].text as string;
+                    await getConnection().getRepository(Instruction).save(instruction);
+                    recipe.instructions.push(instruction);
+                }
+                await getConnection().getRepository(Recipe).save(recipe);
+                return reply.send(JSON.stringify(recipe, null, '\t'))
+            }
+            else {
+                return reply.send("Patch failed : This id does not match any recipe")
+            }
         }
     })
 }
