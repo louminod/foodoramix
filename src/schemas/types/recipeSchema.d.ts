@@ -6,14 +6,31 @@
  */
 
 export interface RecipeSchema {
-  id: string;
+  /**
+   * id of a recipe
+   */
+  id_recipe?: string;
+  /**
+   * title of a recipe
+   */
   title: string;
+  /**
+   * url of an image of a recipe
+   */
   url: string;
-  ingredients: {
-    [k: string]: unknown;
-  }[];
-  instructions: {
-    [k: string]: unknown;
-  }[];
+  /**
+   * all ingredients of a recipe
+   */
+  ingredients: ObjectObject[];
+  /**
+   * all instructions of a recipe
+   */
+  instructions: ObjectObject1[];
+  [k: string]: unknown;
+}
+export interface ObjectObject {
+  [k: string]: unknown;
+}
+export interface ObjectObject1 {
   [k: string]: unknown;
 }
