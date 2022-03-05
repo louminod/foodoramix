@@ -14,6 +14,7 @@ import {Ingredient} from "../entity/Ingredient";
 import {Instruction} from "../entity/Instruction";
 import {User} from "../entity/User";
 import {Session} from "../entity/Session";
+import {Favorite} from "../entity/Favorite";
 
 export function initConnection() {
     return createConnection({
@@ -23,7 +24,7 @@ export function initConnection() {
         username: DATABASE_USER,
         password: DATABASE_PASS,
         database: DATABASE_NAME,
-        entities: [User, Session, Recipe, Ingredient, Instruction],
+        entities: [User, Session, Recipe, Ingredient, Instruction, Favorite],
         synchronize: DATABASE_SYNC,
         logging: DATABASE_LOGGING,
         multipleStatements: true

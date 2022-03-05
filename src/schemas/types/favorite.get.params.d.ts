@@ -5,6 +5,6 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface FavoriteShow {
-  id: number;
+export interface FavoriteGet {
+  recipe_id: string;
 }

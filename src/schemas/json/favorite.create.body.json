@@ -2,12 +2,12 @@
   "$schema": "http://json-schema.org/schema",
   "type": "object",
   "properties": {
-    "id": {
-      "type": "number"
+    "recipe_id": {
+      "type": "string"
     }
   },
   "additionalProperties": false,
   "required": [
-    "id"
+    "recipe_id"
   ]
 }

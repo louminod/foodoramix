@@ -6,5 +6,5 @@
  */
 
 export interface FavoriteDelete {
-  id: number;
+  recipe_id: number;
 }

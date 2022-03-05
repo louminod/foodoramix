@@ -5,3 +5,10 @@ export class UnLoggedError extends UnauthorizedError {
         super('You are not logged in')
     }
 }
+
+export class NotAllowedError extends UnauthorizedError {
+    constructor() {
+        super('You allowed to perform this action')
+    }
+}
+
