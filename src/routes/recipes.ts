@@ -3,14 +3,16 @@ import * as recipeSchema from '../schemas/json/recipeSchema.json'
 import * as responseSchema from '../schemas/json/response.json'
 import {RecipeSchema} from "../schemas/types/recipeSchema";
 import * as recipeShowParamsSchema from '../schemas/json/recipe.show.params.json'
+import * as recipeFindBodySchema from '../schemas/json/recipe.find.body.json'
 import {RecipeShow} from "../schemas/types/recipe.show.params";
-import {getConnection} from 'typeorm'
+import {Any, getConnection, ILike, In, Like} from 'typeorm'
 import {Recipe} from "../entity/Recipe";
 import {Ingredient} from "../entity/Ingredient";
 import {Instruction} from "../entity/Instruction";
 import {uid} from 'uid';
 import {isAuthorized} from "../security/secure";
 import {canPatchRecipe, canPostRecipe} from "../security/secure-recipe";
+import {RecipeFind} from "../schemas/types/recipe.find.body";
 
 export async function recipesRoutes(fastify: FastifyInstance) {
     /**
@@ -94,6 +96,60 @@ export async function recipesRoutes(fastify: FastifyInstance) {
             const recipe = await getConnection().getRepository(Recipe).findOneOrFail({id_recipe: request.params.id_recipe});
             recipe.user = undefined;
             return reply.code(200).send(JSON.stringify(recipe, null, '\t'));
+        }
+    });
+
+    /**
+     * Function to get a recipe by is id.
+     * @param {string} id - The id of the recipe.
+     * @return {json} Return the recipe as a json.
+     */
+    fastify.route<{ Body: RecipeFind }>({
+        method: 'POST',
+        url: '/find',
+        schema: {
+            body: recipeFindBodySchema,
+            description: 'find recipes matching given ingredients',
+            tags: ['recipe'],
+        },
+        handler: async function (request, reply): Promise<RecipeSchema> {
+            const requestedIngredients: string[] = [];
+            request.body.ingredients.forEach(ingredient => {
+                requestedIngredients.push("%" + String(ingredient["text"]) + "%");
+            });
+            const ingredients: Ingredient[] = [];
+            for (const ingredient of requestedIngredients) {
+                const i = await getConnection().getRepository(Ingredient).find({
+                    where: {
+                        text: Like(ingredient)
+                    }
+                });
+
+                i.forEach(ing => {
+                    ingredients.push(ing);
+                });
+            }
+
+            const ingredientsIds: number[] = [];
+
+            ingredients.forEach(ingredient => ingredientsIds.push(ingredient.id_ingredient));
+
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            const recipe_ingredient = await getConnection().query("select * from recipe_ingredients_ingredient");
+
+            const recipesIds = new Set();
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+            recipe_ingredient.forEach((data: { [x: string]: unknown; }) => {
+                if (ingredientsIds.includes(<number>data["ingredientIdIngredient"])) {
+                    recipesIds.add(data["recipeIdRecipe"])
+                }
+            })
+
+            const recipes = await getConnection().getRepository(Recipe).find({
+                id_recipe: In(recipesIds)
+            })
+
+            return reply.code(200).send(JSON.stringify(recipes, null, '\t'));
         }
     });
 
