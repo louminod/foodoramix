@@ -1,7 +1,11 @@
 import { expect } from "chai";
+import { getConnection } from "typeorm";
+import { Ingredient } from "../../entity/Ingredient";
+import { Instruction } from "../../entity/Instruction";
+import { Recipe } from "../../entity/Recipe";
+import { initConnection } from "../../lib/typeorm";
 import { fastify } from "../../lib/fastify";
 import { RecipeSchema } from "../../schemas/types/recipeSchema";
-
 
 describe('Recipes', function () {
     describe('#post', function () {
