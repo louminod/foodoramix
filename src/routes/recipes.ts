@@ -134,20 +134,23 @@ export async function recipesRoutes(fastify: FastifyInstance) {
 
             ingredients.forEach(ingredient => ingredientsIds.push(ingredient.id_ingredient));
 
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            const recipe_ingredient = await getConnection().query("select * from recipe_ingredients_ingredient");
+            const recipe_ingredient = await getConnection().query("select * from recipe_ingredients_ingredient") as {
+                recipeIdRecipe: string,
+                ingredientIdIngredient: number
+            }[];
 
-            const recipesIds = new Set();
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+            const recipesIds: Set<number> = new Set();
             recipe_ingredient.forEach((data: { [x: string]: unknown; }) => {
                 if (ingredientsIds.includes(<number>data["ingredientIdIngredient"])) {
-                    recipesIds.add(data["recipeIdRecipe"])
+                    recipesIds.add(data["recipeIdRecipe"] as number)
                 }
-            })
+            });
 
             const recipes = await getConnection().getRepository(Recipe).find({
-                id_recipe: In(recipesIds)
-            })
+                where: {
+                    id_recipe: In(Array.from(recipesIds.keys()))
+                }
+            });
 
             return reply.code(200).send(JSON.stringify(recipes, null, '\t'));
         }
