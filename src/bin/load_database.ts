@@ -35,6 +35,7 @@ async function run() {
         }
 
         await recipeRepository.save(recipe);
-    }   
+    }
+    console.log("Loading done !")
 }
 run().catch(console.error)

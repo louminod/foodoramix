@@ -1,6 +1,7 @@
-import {Entity, PrimaryColumn, Column, ManyToMany, JoinTable} from "typeorm";
-import { Ingredient } from "./Ingredient";
-import { Instruction } from "./Instruction";
+import {Entity, PrimaryColumn, Column, ManyToMany, JoinTable, ManyToOne} from "typeorm";
+import {Ingredient} from "./Ingredient";
+import {Instruction} from "./Instruction";
+import {User} from "./User";
 
 @Entity()
 export class Recipe {
@@ -22,4 +23,7 @@ export class Recipe {
     @JoinTable()
     instructions!: Instruction[];
 
+    @ManyToOne(() => User, {eager: true, cascade: ['insert'], nullable: true})
+    @JoinTable()
+    user?: User;
 }

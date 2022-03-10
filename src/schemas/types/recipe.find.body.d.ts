@@ -5,6 +5,11 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface FavoriteGet {
-  recipe_id: string;
+export interface RecipeFind {
+  /**
+   * all ingredients of a recipe
+   */
+  ingredients: {
+    [k: string]: unknown;
+  }[];
 }

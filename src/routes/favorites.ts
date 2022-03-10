@@ -1,16 +1,15 @@
-import {FastifyInstance, FastifyRequest} from "fastify";
+import {FastifyInstance} from "fastify";
 import * as responseSchema from '../schemas/json/response.json'
 import * as recipeSchema from '../schemas/json/recipeSchema.json'
 import * as favoriteDeleteParamSchema from '../schemas/json/favorite.delete.params.json'
 import * as favoriteCreateBodySchema from '../schemas/json/favorite.create.body.json'
 import {isAuthorized} from "../security/secure";
-import {canDeleteFavorite, canGetFavorites, canGetSingleFavorite, canPostFavorites} from "../security/secure-favorite";
+import {canDeleteFavorite, canGetFavorites, canPostFavorites} from "../security/secure-favorite";
 import {getRepository} from "typeorm";
 import {Favorite} from "../entity/Favorite";
 import {Recipe} from "../entity/Recipe";
 import {FavoriteDelete} from "../schemas/types/favorite.delete.params";
 import {FavoriteCreate} from "../schemas/types/favorite.create.body";
-import {FavoriteGet} from "../schemas/types/favorite.get.params";
 
 export async function favoritesRoutes(fastify: FastifyInstance) {
 
@@ -22,8 +21,10 @@ export async function favoritesRoutes(fastify: FastifyInstance) {
             tags: ['favorite'],
             response: {200: recipeSchema}
         },
-        handler: async function (request, reply): Promise<Favorite> {
+        preHandler: async function (request) {
             await isAuthorized(canGetFavorites, request.session, null);
+        },
+        handler: async function (request, reply): Promise<Favorite> {
             const favorites = await getRepository(Favorite).find({user: request.session!.user});
             const favoriteRecipes: Recipe[] = [];
             favorites.forEach(favorite => favoriteRecipes.push(favorite.recipe));
@@ -40,8 +41,10 @@ export async function favoritesRoutes(fastify: FastifyInstance) {
             body: favoriteCreateBodySchema,
             response: {200: responseSchema}
         },
-        handler: async function (request, reply): Promise<Favorite> {
+        preHandler: async function (request, reply) {
             await isAuthorized(canPostFavorites, request.session, null);
+        },
+        handler: async function (request, reply): Promise<Favorite> {
             let favorite = new Favorite();
             favorite.user = request.session!.user;
             favorite.recipe = await getRepository(Recipe).findOneOrFail({id_recipe: request.body.recipe_id});
@@ -59,10 +62,14 @@ export async function favoritesRoutes(fastify: FastifyInstance) {
             params: favoriteDeleteParamSchema,
             response: {200: responseSchema}
         },
-        handler: async function (request, reply): Promise<any> {
+        preHandler: async function (request, reply): Promise<any> {
             const recipe = await getRepository(Recipe).findOneOrFail(request.params.recipe_id);
             const favorite = await getRepository(Favorite).findOneOrFail({user: request.session!.user, recipe: recipe});
             await isAuthorized(canDeleteFavorite, request.session, favorite);
+        },
+        handler: async function (request, reply): Promise<any> {
+            const recipe = await getRepository(Recipe).findOneOrFail(request.params.recipe_id);
+            const favorite = await getRepository(Favorite).findOneOrFail({user: request.session!.user, recipe: recipe});
             await getRepository(Favorite).delete(favorite);
             return reply.code(200).send(JSON.stringify({
                 status: "favorite deleted"

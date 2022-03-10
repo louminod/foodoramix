@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "type": "object",
+  "properties": {
+    "ingredients": {
+      "type": "array",
+      "description": "all ingredients of a recipe",
+      "items": {
+        "text": {
+          "type": "string",
+          "description": "description of an ingredient"
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "ingredients"
+  ]
+}
