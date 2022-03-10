@@ -7,11 +7,6 @@ export const canGetFavorites: SecureAction<Favorite> = async function canGetFavo
     return true
 }
 
-export const canGetSingleFavorite: SecureAction<Favorite> = async function canGetSingleFavorite(session) {
-    if (!session) throw new UnLoggedError()
-    return true
-}
-
 export const canDeleteFavorite: SecureAction<Favorite> = async function canDeleteFavorite(session,record) {
     if (!session) throw new UnLoggedError()
     if (record?.user.id !== session.user.id) throw new NotAllowedError()

@@ -24,8 +24,10 @@ export async function accountRoutes(fastify: FastifyInstance) {
                 200: accountDataResponse,
             }
         },
-        handler: async function (request: FastifyRequest): Promise<any> {
+        preHandler: async function (request: FastifyRequest): Promise<any> {
             await isAuthorized(canLoadAccount, request.session, null);
+        },
+        handler: async function (request: FastifyRequest): Promise<any> {
             const user = await userSecureScope(request.session!).getOne();
             return {user: user};
         }

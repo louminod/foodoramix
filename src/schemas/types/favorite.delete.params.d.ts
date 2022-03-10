@@ -6,5 +6,8 @@
  */
 
 export interface FavoriteDelete {
+  /**
+   * id of the recipe to remove from favorites
+   */
   recipe_id: number;
 }
