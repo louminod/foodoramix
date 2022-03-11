@@ -12,7 +12,7 @@ Create a database **foodoramix**
 Create a user **foodoramix_client** identified with the password **FqxTFS93f5!GiMR#**
 
 Open a terminal in the project repository and run `npm run initDB`
-Wait until the message _Loading done !_ appears.
+Wait until the message _Loading done !_ appears. Then, kill the run with ctrl+c
 
 Now, your database should be loaded with recipes and all the others needed data.
 

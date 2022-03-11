@@ -1,17 +1,19 @@
-import { Recipe } from "../entity/Recipe"
-import { Ingredient } from "../entity/Ingredient"
-import { Instruction } from "../entity/Instruction"
-import { getConnection } from "typeorm"
+import {Recipe} from "../entity/Recipe"
+import {Ingredient} from "../entity/Ingredient"
+import {Instruction} from "../entity/Instruction"
+import {getConnection} from "typeorm"
 import * as data from "../resources/data.json"
-import { initConnection } from "../lib/typeorm"
+import {initConnection} from "../lib/typeorm"
+import {User} from "../entity/User";
+import * as bcrypt from "bcrypt";
 
 async function run() {
     await initConnection();
-    
-    const  recipeRepository = getConnection().getRepository(Recipe);
-    const  ingredientRepository = getConnection().getRepository(Ingredient);
-    const  instructionRepository = getConnection().getRepository(Instruction);
-    
+
+    const recipeRepository = getConnection().getRepository(Recipe);
+    const ingredientRepository = getConnection().getRepository(Ingredient);
+    const instructionRepository = getConnection().getRepository(Instruction);
+
     for (let i = 0; i < data.recipes.length; i++) {
         const recipe = new Recipe();
         recipe.id_recipe = data.recipes[i].id;
@@ -36,6 +38,12 @@ async function run() {
 
         await recipeRepository.save(recipe);
     }
+    const user = new User();
+    user.email = "bob@gmail.com";
+    user.password = await bcrypt.hash("azerty", 10);
+    await getConnection().getRepository(User).save(user);
+
     console.log("Loading done !")
 }
+
 run().catch(console.error)
