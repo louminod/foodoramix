@@ -4,7 +4,24 @@ Find a perfect recipe with your own list of ingredients.
 ## Functionalities
 
 The objective of this application is to create a database of recipes, accessible to everyone, where each user can create/edit recipe.
-If the user likes a recipe, I can add it to his favorites for an easier access.
+If the user likes a recipe, He can add it to his favorites for an easier access.
+
+#### For recipes 
+- To see all recipes, the user has to do a GET on /recipes/. The list of recipes will be displayed in the browser in JSON format.
+- To see a specific recipe, the user has to do a GET on /recipes/id. The specific recipe will be displayed in the browser.
+- To create a recipe, the user has to be logged in and do a POST on /recipes/ with a body containing a recipe in JSON format. A recipe must have a title, an URL, a list of ingredients and a list of instructions.
+- To update a recipe, the user has to be logged in and do a PATCH on /recipes/id (id of recipe to modify) with a body containing a recipe in JSON format (similar to the POST)
+
+#### For favorites
+- To add a favorite, the user has to be connected and do a POST on /favorites/ with a body containing the id of a recipe.
+- To see all his favorites, the user has to be connected and do a GET on /favorites/.
+- To remove a recipe from his favorites, the user has to be connected and do a DELETE on /favorites/id (id of recipe to remove).
+
+#### For account
+- To create an account, the user has do a POST on /account/signin/ with a JSON body containing an email and a password.
+- To be connected, the user has to do a POST on /account/login/ with a JSON body containing an email and a password.
+- To see the data of his account, the user has to do a GET on /account/. It will display his email.
+- To change his data, the user has to do a PATCH on /account/ with a JSON body containting an email and a password.
 
 ## Getting started
 
