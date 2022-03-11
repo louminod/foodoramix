@@ -9,12 +9,14 @@ import {UnauthorizedError} from "../security/errors/secureError";
 import {EntityNotFoundError} from "typeorm";
 import fastifySwagger from 'fastify-swagger'
 import {swaggerConfig} from './swagger'
+import {homeRoutes} from "../routes/home";
 
 export const fastify = fastifyFactory({logger: process.env.NODE_ENV !== 'test'})
     .register(cookie, {secret: COOKIE_SECRET} as FastifyCookieOptions)
     .decorateRequest('session', null)
     .addHook('preHandler', loadSession)
     .register(fastifySwagger, swaggerConfig)
+    .register(homeRoutes, {prefix: '/'})
     .register(recipesRoutes, {prefix: '/recipes'})
     .register(favoritesRoutes, {prefix: '/favorites'})
     .register(accountRoutes, {prefix: '/account'})

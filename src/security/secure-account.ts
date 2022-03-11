@@ -9,6 +9,11 @@ export const canLoadAccount: SecureAction<User> = async function canLoadAccount(
     return true
 }
 
+export const canPatchAccount: SecureAction<User> = async function canPatchAccount(session) {
+    if (!session) throw new UnLoggedError()
+    return true
+}
+
 export function userSecureScope(session: Session) {
     return createQueryBuilder(User)
         .where('loginToken = :loginToken AND id = :id', {loginToken: session.id, id: session.user.id});
