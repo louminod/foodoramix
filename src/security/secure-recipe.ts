@@ -1,5 +1,5 @@
 import {SecureAction} from "./secure";
-import {NotAllowedError, UnLoggedError} from "./errors/secureError";
+import {UnLoggedError} from "./errors/secureError";
 import {Favorite} from "../entity/Favorite";
 
 export const canPostRecipe: SecureAction<Favorite> = async function canPostRecipe(session) {

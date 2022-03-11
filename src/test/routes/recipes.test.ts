@@ -1,9 +1,6 @@
 import {expect} from "chai";
-import {getConnection, getRepository} from "typeorm";
 import {fastify} from "../../lib/fastify";
 import {RecipeSchema} from "../../schemas/types/recipeSchema";
-import {Session} from "../../entity/Session";
-import {COOKIE_NAME} from "../../lib/dotenv";
 import {getCookie} from "../test-helper";
 
 describe('/Recipes', function () {

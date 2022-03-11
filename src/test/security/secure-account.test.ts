@@ -1,5 +1,4 @@
 import {expect} from "chai";
-import {canPatchRecipe, canPostRecipe} from "../../security/secure-recipe";
 import {UnLoggedError} from "../../security/errors/secureError";
 import {canDeleteFavorite, canGetFavorites, canPostFavorites} from "../../security/secure-favorite";
 import {Favorite} from "../../entity/Favorite";

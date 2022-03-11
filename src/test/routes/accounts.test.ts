@@ -1,9 +1,8 @@
 import {fastify} from "../../lib/fastify";
 import {expect} from "chai";
 import {User} from "../../entity/User";
-import {UserSchema} from "../../schemas/types/userSchema";
 import {AccountSignin} from "../../schemas/types/account.signin.body";
-import {getConnection, getRepository} from "typeorm";
+import {getConnection} from "typeorm";
 
 describe('/account', function () {
     describe('#signin', function () {

@@ -1,8 +1,7 @@
-import {COOKIE_NAME, COOKIE_SECRET} from "../lib/dotenv";
+import {COOKIE_NAME} from "../lib/dotenv";
 import {Session} from "../entity/Session";
 import {initConnection} from "../lib/typeorm";
-import {sign} from "cookie-signature";
-import {getConnection, getRepository} from "typeorm";
+import {getRepository} from "typeorm";
 
 before(async function () {
     await initConnection();
