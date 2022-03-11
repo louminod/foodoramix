@@ -19,9 +19,7 @@ export async function recipesRoutes(fastify: FastifyInstance) {
      * Function to get the list of recipes.
      * @return {json} Return the list of recipes as a json.
      */
-    fastify.route({
-        method: 'GET',
-        url: '/',
+    fastify.get('/', {
         schema: {
             description: 'get all recipes',
             tags: ['recipe'],
@@ -40,9 +38,7 @@ export async function recipesRoutes(fastify: FastifyInstance) {
      * @param {json} recipe - The recipe to post.
      * @return {json} Return a response corresponding to success or not.
      */
-    fastify.route<{ Body: RecipeSchema }>({
-        method: 'POST',
-        url: '/',
+    fastify.post<{ Body: RecipeSchema }>('/', {
         schema: {
             body: recipeSchema,
             response: {200: responseSchema},
@@ -83,9 +79,7 @@ export async function recipesRoutes(fastify: FastifyInstance) {
      * @param {string} id - The id of the recipe.
      * @return {json} Return the recipe as a json.
      */
-    fastify.route<{ Params: RecipeShow }>({
-        method: 'GET',
-        url: '/:id_recipe',
+    fastify.get<{ Params: RecipeShow }>('/:id_recipe', {
         schema: {
             params: recipeShowParamsSchema,
             response: {200: recipeSchema},
@@ -104,9 +98,7 @@ export async function recipesRoutes(fastify: FastifyInstance) {
      * @param {string} id - The id of the recipe.
      * @return {json} Return the recipe as a json.
      */
-    fastify.route<{ Body: RecipeFind }>({
-        method: 'POST',
-        url: '/find',
+    fastify.post<{ Body: RecipeFind }>('/find', {
         schema: {
             body: recipeFindBodySchema,
             description: 'find recipes matching given ingredients',
@@ -161,9 +153,7 @@ export async function recipesRoutes(fastify: FastifyInstance) {
      * @param {string} id - The id of the recipe.
      * @return {json} Return a response corresponding to success or not.
      */
-    fastify.route<{ Params: RecipeShow, Body: RecipeSchema }>({
-        method: 'PATCH',
-        url: '/:id_recipe',
+    fastify.patch<{ Params: RecipeShow, Body: RecipeSchema }>('/:id_recipe', {
         schema: {
             params: recipeShowParamsSchema,
             body: recipeSchema,
