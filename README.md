@@ -1,6 +1,32 @@
 # Foodoramix
 Find a perfect recipe with your own list of ingredients.
 
+## Getting started
+### Database
+This project is built to work with a MySQL database.
+If you want to run a mysql database on docker, you can type :
+
+`docker run --name mysql-foodoramix -p 3306:3306 -e MYSQL_ROOT_PASSWORD=yourpassword -d mysql`
+
+Create a database **foodoramix**
+Create a user **foodoramix_client** identified with the password **FqxTFS93f5!GiMR#**
+
+Open a terminal in the project repository and run `npm run initDB`
+Wait until the message _Loading done !_ appears.
+
+Now, your database should be loaded with recipes and all the others needed data.
+
+### API
+To run the api, you need 2 terminals.
+
+In the first, run `npx tsc --watch` and in the second `node dist/index.js`.
+
+You should see a message in your terminal saying that the server is listening.
+
+If you open your favorite browser and open the given link (http://127.0.0.1:3000 for example) you should see the welcome message.
+
+You start can now start playing with API functionalities.
+
 ## Functionalities
 
 The objective of this application is to create a database of recipes, accessible to everyone, where each user can create/edit recipe.
@@ -23,7 +49,9 @@ If the user likes a recipe, He can add it to his favorites for an easier access.
 - To see the data of his account, the user has to do a GET on /account/. It will display his email.
 - To change his data, the user has to do a PATCH on /account/ with a JSON body containting an email and a password.
 
-## Getting started
+## Test & Code coverage
+
+## Documentation
 
 ## Checkpoints report for the project
 
