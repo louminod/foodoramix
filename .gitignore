@@ -5,6 +5,5 @@ tmp/
 temp/
 dist/
 .env
-package-lock.json
 /coverage/
 /.nyc_output/
