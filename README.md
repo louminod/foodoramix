@@ -10,6 +10,7 @@ If you want to run a mysql database on docker, you can type :
 
 Create a database **foodoramix**
 Create a user **foodoramix_client** identified with the password **FqxTFS93f5!GiMR#**
+Or, you can use the user **root** with the password you defined earlier.
 
 Open a terminal in the project repository and run `npm run initDB`
 Wait until the message _Loading done !_ appears. Then, kill the run with ctrl+c
@@ -25,7 +26,9 @@ You should see a message in your terminal saying that the server is listening.
 
 If you open your favorite browser and open the given link (http://127.0.0.1:3000 for example) you should see the welcome message.
 
-You start can now start playing with API functionalities.
+You can now start playing with API functionalities.
+
+The file *Insomnia_export.json* is a file containing route use example. Import it in insomnia to try the routes with the correct schemas.
 
 ## Functionalities
 
